@@ -5,12 +5,13 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Metodos {
+    public static int max = 5000;
 
     public static void generarArchivo() {
         Random random = new Random();
-        int[] numerosAleatorios = new int[20];
+        int[] numerosAleatorios = new int[max];
         for (int i = 0; i < numerosAleatorios.length; i++) {
-            numerosAleatorios[i] = random.nextInt(100) + 1;
+            numerosAleatorios[i] = random.nextInt(max*2) + 1;
         }
         try (FileWriter fileWriter = new FileWriter("numeros.txt")) {
             for (int j : numerosAleatorios) {
@@ -29,7 +30,7 @@ public class Metodos {
             System.out.print("\n\tMOSTRANDO:");
             while (scanner.hasNextInt()) {
                 int numeroLeido = scanner.nextInt();
-                System.out.print(numeroLeido + "---");
+                System.out.print(numeroLeido + " ");
             }    
         } catch (Exception e) {
             System.out.print("ERROR:" + e.getMessage());
@@ -37,6 +38,35 @@ public class Metodos {
     }
 
 /*............................................................................................................. */
+
+
+    private static int[] leerNumeros(){
+        try (Scanner scanner = new Scanner(new File("numeros.txt"))){
+            int[] numeros = new int[max];
+            int indice = 0;
+            while (scanner.hasNextLine() && indice < numeros.length) {
+                numeros[indice++] = scanner.nextInt();
+            }
+            return numeros;
+        } catch (Exception e) {
+            System.out.print("ERROR AMIGO:" + e.getMessage());
+            return null;
+        }
+    }
+
+    private static int[] leerNumeros2(){
+        try (Scanner scanner = new Scanner(new File("numerosOrdenados.txt"))){
+            int[] numeros = new int[max];
+            int indice = 0;
+            while (scanner.hasNextLine() && indice < numeros.length) {
+                numeros[indice++] = scanner.nextInt();
+            }
+            return numeros;
+        } catch (Exception e) {
+            System.out.print("ERROR AMIGO:" + e.getMessage());
+            return null;
+        }
+    }
     
     public static void ordenar(){
         int [] numeros = leerNumeros();
@@ -45,11 +75,11 @@ public class Metodos {
             return;
         }
 
-        Arrays.sort(numeros);
+        Arrays.sort(numeros);/* */
 
         try (FileWriter fileWriter = new FileWriter("numerosOrdenados.txt")){
             for (int numero : numeros) {
-                fileWriter.write(numero + "\t");
+                fileWriter.write(numero + " ");
             }            
             System.out.print("------------------------\n"
             + "CREADO Y LISTO PARA MOSTRAR\n"
@@ -62,21 +92,6 @@ public class Metodos {
         }
     }
 
-
-    private static int[] leerNumeros(){
-        try (Scanner scanner = new Scanner(new File("numeros.txt"))){
-            int[] numeros = new int[20];
-            int indice = 0;
-            while (scanner.hasNextLine() && indice < numeros.length) {
-                numeros[indice++] = scanner.nextInt();
-            }
-            return numeros;
-        } catch (Exception e) {
-            System.out.print("ERROR AMIGO:" + e.getMessage());
-            return null;
-        }
-    }
-
 /*............................................................................................................. */
 
     public static void mostrarNumerosOrdenados(){
@@ -85,7 +100,7 @@ public class Metodos {
             System.out.print("\n\tMOSTRANDO NUMEROS ORDENADOS:");
             while (scanner.hasNextInt()) {
                 int numero = scanner.nextInt();
-                System.out.print(numero + "***");
+                System.out.print(numero + " ");
             }  
         } catch (Exception e) {
             System.out.print("ERROR:" + e.getMessage());
@@ -95,7 +110,7 @@ public class Metodos {
 /*............................................................................................................. */
 
     public static void buscar(int num){
-        int[] numeros = leerNumeros();
+        int[] numeros = leerNumeros2();
         if(numeros == null){
             System.out.print("PROBLEMAS");
             return;
